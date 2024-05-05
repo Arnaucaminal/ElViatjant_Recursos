@@ -1,0 +1,73 @@
+package com.morera.xavier.midespantalla;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.graphics.Point;
+import android.os.Bundle;
+import android.view.Display;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    TextView tv;
+    Button bMides;
+    Button bMoure;
+    float x;
+    float y;
+    float posXEsquerra, posYDalt;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        tv = findViewById(R.id.text);
+        bMides = findViewById(R.id.button);
+        bMoure = findViewById(R.id.button_moure);
+
+    }
+
+    public void midesPantalla(View view) {
+        // obtenir les mides de la pantalla
+        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        /*ús de mètodes en deprecated a partir de API 13
+        int ample = display.getWidth();
+        int alcada = display.getHeight();
+        */
+        Point midaPantalla= new Point();
+        display.getSize(midaPantalla);
+        int amplePantalla = midaPantalla.x;
+        int alcadaPantalla = midaPantalla.y;
+
+        tv.setText("ample: "+String.valueOf(amplePantalla)+ "\nalçada: "+String.valueOf(alcadaPantalla));
+
+    }
+
+    public void moure(View view){
+        //obtenir posició actual del centre de l'element
+        // si no volem que surti de marge haurem de controlar les seves mides
+        x = tv.getX();
+        y = tv.getY();
+        //assignar posició
+        tv.setX(100f);
+        tv.setY(300f);
+        //ample i llarg de tv
+        tv.getWidth();
+        tv.getHeight();
+
+        posXEsquerra = tv.getX()-(tv.getWidth()/2);// divideixo entre dos pq les coordenades estan ubicades al punt mig
+
+        tv.setText("posició inicial\n" +
+                "X: "+String.valueOf(x)+ "\n" +
+                "Y: "+String.valueOf(y)+"\n" +
+                "posició final\n" +
+                "X: 100\n" +
+                "Y: 300\n" +
+                "ample objecte: "+String.valueOf(tv.getWidth())+"\n" +
+                "posició esquerra: "+String.valueOf(posXEsquerra));
+    }
+}
